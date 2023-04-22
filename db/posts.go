@@ -62,3 +62,33 @@ func (db Database) DeletePost(postId int) error {
 	}
 	return nil
 }
+
+func (db Database) GetPostById(postId int) (models.Post, error) {
+	post := models.Post{}
+	query := "SELECT id, title, body FROM posts WHERE id = $1"
+	row := db.Conn.QueryRow(query, postId)
+	switch err := row.Scan(&post.ID, &post.Title, &post.Body); err {
+	case sql.ErrNoRows:
+		return post, ErrNoRecord
+	default:
+		return post, err
+	}
+}
+
+func (db Database) GetPosts() ([]models.Post, error) {
+	var list []models.Post
+	query := "SELECT id, title, body FROM posts ORDER BY id DESC"
+	rows, err := db.Conn.Query(query)
+	if err != nil {
+		return list, err
+	}
+	for rows.Next() {
+		var post models.Post
+		err := rows.Scan(&post.ID, &post.Title, &post.Body)
+		if err != nil {
+			return list, err
+		}
+		list = append(list, post)
+	}
+	return list, nil
+}
