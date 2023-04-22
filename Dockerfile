@@ -1,4 +1,4 @@
-FROM golang:1.15.7-buster
+FROM golang:1.17.7-buster
 
 COPY go.mod go.sum /go/src/elkWorkshop/
 WORKDIR /go/src/elkWorkshop

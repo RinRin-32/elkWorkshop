@@ -1,8 +1,9 @@
 module elkWorkshop
 
-go 1.20
+go 1.17
 
 require (
+	github.com/bxcodec/faker/v3 v3.8.1
 	github.com/elastic/go-elasticsearch/v7 v7.17.7
 	github.com/gin-gonic/gin v1.9.0
 	github.com/lib/pq v1.10.8
