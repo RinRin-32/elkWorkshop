@@ -7,4 +7,5 @@ COPY . /go/src/elkWorkshop
 RUN go build -o /usr/bin/elkWorkshop elkWorkshop/cmd/api
 
 EXPOSE 8080 8080
+RUN chmod +x /usr/bin/elkWorkshop
 ENTRYPOINT ["/usr/bin/elkWorkshop"]
