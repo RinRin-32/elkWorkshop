@@ -6,6 +6,8 @@ import (
 	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"os"
 	"strconv"
 )
@@ -47,6 +49,8 @@ func main() {
 
 	h := handler.New(dbInstance, esClient, logger)
 	router := gin.Default()
+	// add swagger
+	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	rg := router.Group("/v1")
 	h.Register(rg)
 	router.Run(":8080")
